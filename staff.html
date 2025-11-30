@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="GIKI Food Ordering System - Staff Dashboard for order management">
+  <title>Staff Dashboard - GIKI Food Ordering</title>
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/staff.css">
+  
+  <!-- Favicon (placeholder) -->
+  <link rel="icon" type="image/png" href="images/logo/favicon.png">
+</head>
+<body>
+
+  <!-- Skip to main content link -->
+  <a href="#main-content" class="skip-to-content">Skip to main content</a>
+
+  <!-- Mobile Menu Button -->
+  <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle sidebar menu">
+    <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+    </svg>
+  </button>
+
+  <!-- Dashboard Container -->
+  <div class="dashboard-container">
+    
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <img src="images/logo/giki-logo.png" alt="GIKI Logo" onerror="this.style.display='none'">
+          <span>GIKI Food</span>
+        </div>
+        <p class="sidebar-subtitle">Staff Portal</p>
+      </div>
+      
+      <nav>
+        <ul class="sidebar-nav">
+          <li class="sidebar-nav-item">
+            <a href="#" class="sidebar-nav-link active" data-view="orders">
+              <span class="sidebar-nav-icon">📦</span>
+              <span>Orders</span>
+            </a>
+          </li>
+          <li class="sidebar-nav-item">
+            <a href="#" class="sidebar-nav-link" data-view="inventory">
+              <span class="sidebar-nav-icon">📋</span>
+              <span>Inventory</span>
+            </a>
+          </li>
+          <li class="sidebar-nav-item">
+            <a href="#" class="sidebar-nav-link" data-view="analytics">
+              <span class="sidebar-nav-icon">📊</span>
+              <span>Analytics</span>
+            </a>
+          </li>
+          <li class="sidebar-nav-item">
+            <a href="index.html" class="sidebar-nav-link">
+              <span class="sidebar-nav-icon">🏠</span>
+              <span>Student View</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      
+      <div class="sidebar-footer">
+        <div class="staff-profile">
+          <div class="staff-avatar">AQ</div>
+          <div class="staff-info">
+            <div class="staff-name">Ali Qaim</div>
+            <div class="staff-role">Café Staff</div>
+          </div>
+        </div>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle theme" style="margin-top: var(--spacing-md);">
+          <span class="theme-icon-light" aria-hidden="true">🌙</span>
+          <span class="theme-icon-dark" aria-hidden="true" style="display: none;">☀️</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Sidebar Overlay for Mobile -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Main Content Area -->
+    <main class="dashboard-main" id="main-content">
+      
+      <!-- View: Orders (Default) -->
+      <section id="ordersView">
+        <div class="dashboard-header">
+          <h1 class="dashboard-title">Active Orders</h1>
+          <div class="dashboard-actions">
+            <button class="btn btn-secondary btn-sm" id="refreshOrdersBtn" aria-label="Refresh orders">
+              <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" style="margin-right: 4px;">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+              </svg>
+              Refresh
+            </button>
+          </div>
+        </div>
+
+        <!-- Quick Stats -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon primary">📦</div>
+            <div class="stat-content">
+              <div class="stat-label">Active Orders</div>
+              <div class="stat-value" id="statActiveOrders">0</div>
+            </div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-icon warning">⏳</div>
+            <div class="stat-content">
+              <div class="stat-label">In Preparation</div>
+              <div class="stat-value" id="statPreparing">0</div>
+            </div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-icon success">✓</div>
+            <div class="stat-content">
+              <div class="stat-label">Ready for Pickup</div>
+              <div class="stat-value" id="statReady">0</div>
+            </div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-icon info">💰</div>
+            <div class="stat-content">
+              <div class="stat-label">Today's Revenue</div>
+              <div class="stat-value" id="statRevenue">Rs. 0</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Orders Section -->
+        <div class="orders-section">
+          <div class="section-header-staff">
+            <h2 class="section-title-staff">Orders Queue</h2>
+            <div class="filter-tabs">
+              <button class="filter-tab active" data-filter="all">All</button>
+              <button class="filter-tab" data-filter="confirmed">New</button>
+              <button class="filter-tab" data-filter="preparing">Preparing</button>
+              <button class="filter-tab" data-filter="ready">Ready</button>
+            </div>
+          </div>
+          
+          <div class="orders-list" id="ordersList">
+            <!-- Orders will be dynamically loaded here -->
+          </div>
+        </div>
+      </section>
+
+      <!-- View: Inventory Management (V2 - Separated) -->
+      <section id="inventoryView" class="hidden">
+        <div class="dashboard-header">
+          <h1 class="dashboard-title">Inventory Management</h1>
+          <div class="dashboard-actions">
+            <button class="btn btn-primary btn-sm" id="updateStockBtn">
+              💾 Save Changes
+            </button>
+          </div>
+        </div>
+
+        <!-- Low Stock Alert -->
+        <div class="card mb-lg" id="lowStockAlert" style="display: none; border-left: 4px solid var(--color-warning);">
+          <div class="card-body">
+            <h3 style="color: var(--color-warning); margin-bottom: var(--spacing-sm);">⚠️ Low Stock Alert</h3>
+            <div id="lowStockItems"></div>
+          </div>
+        </div>
+
+        <!-- Inventory Section -->
+        <div class="inventory-section">
+          <div class="inventory-search mb-lg">
+            <div class="search-wrapper">
+              <svg class="search-icon" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+              </svg>
+              <input 
+                type="text" 
+                class="search-input" 
+                id="inventorySearch" 
+                placeholder="Search inventory..."
+                autocomplete="off"
+              >
+            </div>
+          </div>
+          
+          <div style="overflow-x: auto;">
+            <table class="inventory-table">
+              <thead>
+                <tr>
+                  <th>Item Name</th>
+                  <th>Category</th>
+                  <th>Price</th>
+                  <th>Stock</th>
+                  <th>Status</th>
+                  <th>Availability</th>
+                </tr>
+              </thead>
+              <tbody id="inventoryTableBody">
+                <!-- Inventory items will be loaded here -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- View: Analytics (Admin Dashboard) -->
+      <section id="analyticsView" class="hidden">
+        <div class="dashboard-header">
+          <h1 class="dashboard-title">Analytics & Reports</h1>
+          <div class="dashboard-actions">
+            <button class="btn btn-secondary btn-sm">
+              📥 Export Report
+            </button>
+          </div>
+        </div>
+
+        <!-- Today's Summary -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon success">💰</div>
+            <div class="stat-content">
+              <div class="stat-label">Today's Sales</div>
+              <div class="stat-value" id="analyticsRevenue">Rs. 0</div>
+            </div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-icon primary">📦</div>
+            <div class="stat-content">
+              <div class="stat-label">Orders Completed</div>
+              <div class="stat-value" id="analyticsOrders">0</div>
+            </div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-icon info">⏱️</div>
+            <div class="stat-content">
+              <div class="stat-label">Avg. Wait Time</div>
+              <div class="stat-value" id="analyticsAvgWait">0 min</div>
+            </div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-icon warning">⭐</div>
+            <div class="stat-content">
+              <div class="stat-label">Avg. Rating</div>
+              <div class="stat-value" id="analyticsRating">4.5</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Popular Items -->
+        <div class="card mb-xl">
+          <div class="card-header">
+            <h3>Top Selling Items Today</h3>
+          </div>
+          <div class="card-body">
+            <div id="popularItemsList">
+              <!-- Popular items will be loaded here -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Outlet Performance -->
+        <div class="card mb-xl">
+          <div class="card-header">
+            <h3>Outlet Performance</h3>
+          </div>
+          <div class="card-body">
+            <div style="overflow-x: auto;">
+              <table class="inventory-table">
+                <thead>
+                  <tr>
+                    <th>Outlet</th>
+                    <th>Orders</th>
+                    <th>Revenue</th>
+                    <th>Avg. Wait</th>
+                  </tr>
+                </thead>
+                <tbody id="outletPerformanceBody">
+                  <!-- Outlet performance data will be loaded here -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Low Stock Alerts -->
+        <div class="card">
+          <div class="card-header">
+            <h3>⚠️ Low Stock Alerts</h3>
+          </div>
+          <div class="card-body">
+            <div id="analyticsLowStock">
+              <!-- Low stock items will be loaded here -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Order Detail Modal (Optional Enhancement) -->
+  <div class="cart-overlay" id="orderDetailOverlay" aria-hidden="true"></div>
+  <aside class="cart-sidebar" id="orderDetailModal" role="dialog" aria-hidden="true">
+    <div class="cart-header">
+      <h3 class="cart-title">Order Details</h3>
+      <button class="cart-close" id="orderDetailClose" aria-label="Close">&times;</button>
+    </div>
+    
+    <div class="cart-items" id="orderDetailContent" style="padding: var(--spacing-lg);">
+      <!-- Order details will be loaded here -->
+    </div>
+  </aside>
+
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/staff.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="GIKI Food Ordering System - Order food from campus outlets without queuing">
+  <title>GIKI Food Ordering System - Home</title>
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/student.css">
+  
+  <!-- Favicon (placeholder) -->
+  <link rel="icon" type="image/png" href="images/logo/favicon.png">
+</head>
+<body>
+  
+  <!-- Skip to main content link for keyboard navigation -->
+  <a href="#main-content" class="skip-to-content">Skip to main content</a>
+
+  <!-- Header / Navigation -->
+  <header class="header">
+    <div class="container">
+      <nav class="navbar" role="navigation" aria-label="Main navigation">
+        <!-- Logo -->
+        <a href="index.html" class="logo">
+          <img src="images/logo/giki-logo.png" alt="GIKI Logo" onerror="this.style.display='none'">
+          <span>GIKI Food</span>
+        </a>
+        
+        <!-- Mobile Menu Toggle -->
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        
+        <!-- Navigation Links -->
+        <ul class="nav-links" id="navLinks">
+          <li><a href="index.html" class="active">Home</a></li>
+          <li><a href="#" id="ordersLink">My Orders</a></li>
+          <li><a href="staff.html">Staff Portal</a></li>
+        </ul>
+        
+        <!-- Theme Toggle & Search Shortcut -->
+        <div style="display: flex; align-items: center; gap: var(--spacing-sm);">
+          <button class="nav-search-btn" id="navSearchBtn" aria-label="Search for food" title="Search (Ctrl+K)">
+            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+          </button>
+          <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle theme">
+            <span class="theme-icon-light" aria-hidden="true">🌙</span>
+            <span class="theme-icon-dark" aria-hidden="true" style="display: none;">☀️</span>
+          </button>
+        </div>
+        
+        <!-- User Profile -->
+        <div class="user-profile">
+          <div class="user-avatar" id="userAvatar">AR</div>
+          <div class="user-info">
+            <div class="user-name" id="userName">Ali Raza</div>
+            <div class="user-balance" id="userBalance">Rs. 2,500</div>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main id="main-content">
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="container">
+        <div class="hero-content">
+          <h1 class="hero-title">Welcome Home!</h1>
+          <p class="hero-subtitle">What would you like to order?</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Global Search Bar (V2 Design) -->
+    <div class="global-search">
+      <div class="container">
+        <div class="search-wrapper">
+          <svg class="search-icon" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+          </svg>
+          <input 
+            type="text" 
+            class="search-input" 
+            id="globalSearch" 
+            placeholder="Search for food..."
+            autocomplete="off"
+          >
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content Container -->
+    <div class="container">
+      
+      <!-- View: Home (Outlets Grid) -->
+      <section id="homeView" class="fade-in">
+        <div class="section-header">
+          <h2 class="section-title">Browse Menu</h2>
+        </div>
+        
+        <div class="outlets-grid" id="outletsGrid">
+          <!-- Outlets will be dynamically loaded here -->
+        </div>
+      </section>
+
+      <!-- View: Menu Items (Hidden by default) -->
+      <section id="menuView" class="hidden">
+        <div class="section-header">
+          <h2 class="section-title" id="menuViewTitle">Menu</h2>
+          <button class="btn btn-secondary" id="backToHome">← Back to Outlets</button>
+        </div>
+        
+        <!-- Category Filter Pills -->
+        <div class="category-filter" id="categoryFilter">
+          <!-- Categories will be dynamically loaded -->
+        </div>
+        
+        <div class="menu-items-grid" id="menuItemsGrid">
+          <!-- Menu items will be dynamically loaded here -->
+        </div>
+      </section>
+
+      <!-- View: Search Results (Hidden by default) -->
+      <section id="searchView" class="hidden">
+        <div class="section-header">
+          <h2 class="section-title">Search Results</h2>
+          <button class="btn btn-secondary" id="clearSearch">Clear Search</button>
+        </div>
+        
+        <div class="menu-items-grid" id="searchResultsGrid">
+          <!-- Search results will be dynamically loaded here -->
+        </div>
+      </section>
+
+      <!-- View: Order Tracking (Hidden by default) -->
+      <section id="trackingView" class="hidden">
+        <div class="tracking-container">
+          <!-- Order confirmation banner -->
+          <div class="order-confirmation">
+            <div class="confirmation-icon">✓</div>
+            <h2 class="confirmation-title">Payment Successful!</h2>
+            <p class="confirmation-message">Your order has been confirmed and is being prepared.</p>
+            <p class="order-number">Order #<span id="currentOrderNumber"></span></p>
+          </div>
+          
+          <!-- Estimated Time -->
+          <div class="estimated-time">
+            <div class="estimated-time-label">Estimated Time Remaining</div>
+            <div class="estimated-time-value"><span id="estimatedMinutes">15</span> minutes</div>
+          </div>
+          
+          <!-- Order Tracking Timeline -->
+          <div class="tracking-timeline">
+            <h3 class="timeline-title">Track Your Order</h3>
+            <div class="timeline">
+              <div class="timeline-step completed" id="stepConfirmed">
+                <div class="timeline-marker">✓</div>
+                <div class="timeline-content">
+                  <div class="timeline-label">Order Confirmed</div>
+                  <div class="timeline-description">Your order has been received</div>
+                  <div class="timeline-time">🕐 Just now</div>
+                </div>
+              </div>
+              
+              <div class="timeline-step active" id="stepPreparing">
+                <div class="timeline-marker">⏳</div>
+                <div class="timeline-content">
+                  <div class="timeline-label">Preparing Your Order</div>
+                  <div class="timeline-description">Your food is being prepared with care</div>
+                  <div class="timeline-time">🕐 In progress...</div>
+                </div>
+              </div>
+              
+              <div class="timeline-step" id="stepReady">
+                <div class="timeline-marker">📦</div>
+                <div class="timeline-content">
+                  <div class="timeline-label">Ready for Pickup</div>
+                  <div class="timeline-description">We'll notify you when your order is ready</div>
+                  <div class="timeline-time">🕐 Pending</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Order Details -->
+          <div class="order-details-card">
+            <h3 class="order-details-title">Order Details</h3>
+            <div id="trackingOrderItems">
+              <!-- Order items will be populated here -->
+            </div>
+            <div class="order-total-row">
+              <span>Total Paid</span>
+              <span id="trackingOrderTotal">Rs. 0</span>
+            </div>
+          </div>
+          
+          <button class="btn btn-primary btn-full mt-xl" id="backToHomeFromTracking">Continue Browsing</button>
+        </div>
+      </section>
+
+      <!-- View: Order History (Hidden by default) -->
+      <section id="historyView" class="hidden">
+        <div class="section-header">
+          <h2 class="section-title">My Orders</h2>
+          <button class="btn btn-secondary" id="backToHomeFromHistory">← Back</button>
+        </div>
+        
+        <div id="orderHistoryList">
+          <!-- Order history will be loaded here -->
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Shopping Cart Floating Button with Preview -->
+  <div class="cart-fab-wrapper">
+    <!-- Cart Preview on Hover -->
+    <div class="cart-preview" id="cartPreview" aria-hidden="true">
+      <div class="cart-preview-header">Your Cart</div>
+      <div class="cart-preview-items" id="cartPreviewItems">
+        <!-- Preview items will be populated by JS -->
+      </div>
+      <div class="cart-preview-footer" id="cartPreviewFooter" style="display: none;">
+        <span class="cart-preview-total">Total: <span id="cartPreviewTotal">Rs. 0</span></span>
+        <button class="cart-preview-btn" id="cartPreviewCheckout">Checkout</button>
+      </div>
+    </div>
+    
+    <!-- FAB Button -->
+    <button class="cart-fab" id="cartFab" aria-label="Open shopping cart" aria-expanded="false">
+      <span class="cart-fab-icon" aria-hidden="true">
+        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
+        </svg>
+        <span class="cart-count hidden" id="cartCount" aria-live="polite">0</span>
+      </span>
+    </button>
+  </div>
+
+  <!-- Shopping Cart Sidebar -->
+  <div class="cart-overlay" id="cartOverlay" aria-hidden="true"></div>
+  <aside class="cart-sidebar" id="cartSidebar" role="dialog" aria-modal="true" aria-labelledby="cartTitle" aria-hidden="true">
+    <div class="cart-header">
+      <h3 class="cart-title" id="cartTitle">Your Cart</h3>
+      <button class="cart-close" id="cartClose" aria-label="Close cart">&times;</button>
+    </div>
+    
+    <div class="cart-items" id="cartItems">
+      <!-- Cart items will be dynamically loaded -->
+    </div>
+    
+    <div class="cart-footer" id="cartFooter" style="display: none;">
+      <div class="cart-summary">
+        <div class="cart-summary-row">
+          <span>Subtotal</span>
+          <span id="cartSubtotal">Rs. 0</span>
+        </div>
+      </div>
+      
+      <div class="cart-total">
+        <span>Total</span>
+        <span id="cartTotal">Rs. 0</span>
+      </div>
+      
+      <button class="btn btn-success btn-full" id="checkoutBtn">
+        Proceed to Checkout
+      </button>
+    </div>
+  </aside>
+
+  <!-- Checkout Modal (Simple overlay) -->
+  <div class="cart-overlay" id="checkoutOverlay" aria-hidden="true"></div>
+  <aside class="cart-sidebar" id="checkoutModal" role="dialog" aria-modal="true" aria-labelledby="checkoutTitle" aria-hidden="true">
+    <div class="cart-header">
+      <h3 class="cart-title" id="checkoutTitle">Checkout</h3>
+      <button class="cart-close" id="checkoutClose" aria-label="Close checkout">&times;</button>
+    </div>
+    
+    <div class="cart-items" style="padding: var(--spacing-lg);">
+      <div class="form-group">
+        <label class="form-label">Delivery Type</label>
+        <select class="form-select" id="deliveryType">
+          <option value="pickup">Pickup</option>
+          <option value="delivery" disabled>Delivery (Coming Soon)</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label class="form-label">Payment Method</label>
+        <select class="form-select" id="paymentMethod">
+          <option value="account">GIKI Account (Balance: Rs. 2,500)</option>
+          <option value="card">Credit/Debit Card</option>
+          <option value="wallet">Mobile Wallet (JazzCash/Easypaisa)</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label class="form-label">Special Instructions (Optional)</label>
+        <textarea class="form-textarea" id="specialInstructions" placeholder="e.g., Less spicy, extra sauce..."></textarea>
+      </div>
+      
+      <div class="cart-total mb-lg">
+        <span>Total Amount</span>
+        <span id="checkoutTotal">Rs. 0</span>
+      </div>
+      
+      <button class="btn btn-success btn-full mb-sm" id="confirmPaymentBtn">
+        Confirm & Pay
+      </button>
+      <button class="btn btn-secondary btn-full" id="cancelCheckoutBtn">
+        Cancel
+      </button>
+    </div>
+  </aside>
+
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/student.js"></script>
+  
+</body>
+</html>

@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Setup Guide - GIKI Food Ordering</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 2rem;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 1rem;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      padding: 3rem;
+    }
+    
+    h1 {
+      color: #1e3a5f;
+      margin-bottom: 1rem;
+      font-size: 2.5rem;
+    }
+    
+    .subtitle {
+      color: #6c757d;
+      margin-bottom: 2rem;
+      font-size: 1.125rem;
+    }
+    
+    .section {
+      background: #f8f9fa;
+      border-left: 4px solid #667eea;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      border-radius: 0.5rem;
+    }
+    
+    .section h2 {
+      color: #1e3a5f;
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+    }
+    
+    .path {
+      background: #1e3a5f;
+      color: white;
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      font-family: 'Courier New', monospace;
+      margin: 1rem 0;
+      display: block;
+      word-break: break-all;
+    }
+    
+    .file-icon {
+      font-size: 2rem;
+      margin-right: 0.5rem;
+    }
+    
+    .requirement {
+      background: white;
+      padding: 0.75rem;
+      margin: 0.5rem 0;
+      border-radius: 0.375rem;
+      border: 1px solid #dee2e6;
+    }
+    
+    .btn {
+      display: inline-block;
+      padding: 1rem 2rem;
+      background: #4CAF50;
+      color: white;
+      text-decoration: none;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      margin: 0.5rem 0.5rem 0.5rem 0;
+      transition: all 0.3s;
+    }
+    
+    .btn:hover {
+      background: #45a049;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(76, 175, 80, 0.4);
+    }
+    
+    .btn-secondary {
+      background: #667eea;
+    }
+    
+    .btn-secondary:hover {
+      background: #5568d3;
+    }
+    
+    .status {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 1rem;
+      font-size: 0.875rem;
+      font-weight: 600;
+      margin-left: 0.5rem;
+    }
+    
+    .status.optional {
+      background: #fff3cd;
+      color: #856404;
+    }
+    
+    .status.required {
+      background: #f8d7da;
+      color: #721c24;
+    }
+    
+    .note {
+      background: #d1ecf1;
+      border-left: 4px solid #0c5460;
+      padding: 1rem;
+      margin: 1rem 0;
+      border-radius: 0.375rem;
+      color: #0c5460;
+    }
+    
+    .demo-section {
+      text-align: center;
+      padding: 2rem;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border-radius: 0.5rem;
+      margin-top: 2rem;
+    }
+    
+    @media (max-width: 768px) {
+      .container {
+        padding: 1.5rem;
+      }
+      
+      h1 {
+        font-size: 1.75rem;
+      }
+      
+      .subtitle {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🖼️ Image Setup Guide</h1>
+    <p class="subtitle">Add your GIKI logo and food images to make the prototype more realistic</p>
+    
+    <!-- GIKI Logo Section -->
+    <div class="section">
+      <h2><span class="file-icon">🎓</span> GIKI Logo <span class="status required">RECOMMENDED</span></h2>
+      <p>Your GIKI logo will appear in the header and staff dashboard.</p>
+      
+      <div class="requirement">
+        <strong>📂 Location:</strong>
+        <code class="path">images/logo/giki-logo.png</code>
+      </div>
+      
+      <div class="requirement">
+        <strong>📐 Recommended Size:</strong> 200 x 200 pixels
+      </div>
+      
+      <div class="requirement">
+        <strong>🎨 Format:</strong> PNG with transparent background (or white background)
+      </div>
+      
+      <div class="requirement">
+        <strong>💡 Alternative Name:</strong> You can also use <code>giki-logo.jpg</code> or <code>giki-logo.svg</code>
+      </div>
+      
+      <div class="note">
+        <strong>✨ Tip:</strong> If you don't have the logo, the text "GIKI Food" will be displayed instead. This still looks professional!
+      </div>
+    </div>
+    
+    <!-- Food Images Section -->
+    <div class="section">
+      <h2><span class="file-icon">🍽️</span> Food Images <span class="status optional">OPTIONAL</span></h2>
+      <p>Currently using emoji placeholders (🍴). You can add real food photos for a more realistic demo.</p>
+      
+      <div class="requirement">
+        <strong>📂 Location:</strong>
+        <code class="path">images/food/</code>
+      </div>
+      
+      <div class="requirement">
+        <strong>📸 Suggested Images:</strong>
+        <ul style="margin-top: 0.5rem; margin-left: 1.5rem;">
+          <li>chicken-biryani.jpg</li>
+          <li>beef-burger.jpg</li>
+          <li>zinger-burger.jpg</li>
+          <li>cold-drink.jpg</li>
+          <li>chicken-wings.jpg</li>
+          <li>...and more (30+ items available)</li>
+        </ul>
+      </div>
+      
+      <div class="requirement">
+        <strong>📐 Recommended Size:</strong> 800 x 600 pixels (or similar 4:3 ratio)
+      </div>
+      
+      <div class="requirement">
+        <strong>🎨 Format:</strong> JPG or PNG (keep files under 200KB each)
+      </div>
+      
+      <div class="note">
+        <strong>✨ Tip:</strong> The emoji placeholders (🍴) actually look quite modern and keep the prototype lightweight. You can leave them as-is!
+      </div>
+    </div>
+    
+    <!-- Favicon Section -->
+    <div class="section">
+      <h2><span class="file-icon">⭐</span> Favicon <span class="status optional">OPTIONAL</span></h2>
+      <p>Small icon that appears in browser tabs.</p>
+      
+      <div class="requirement">
+        <strong>📂 Location:</strong>
+        <code class="path">images/logo/favicon.png</code>
+      </div>
+      
+      <div class="requirement">
+        <strong>📐 Size:</strong> 32 x 32 pixels or 64 x 64 pixels
+      </div>
+      
+      <div class="requirement">
+        <strong>🎨 Format:</strong> PNG or ICO
+      </div>
+    </div>
+    
+    <!-- After Adding Images -->
+    <div class="section" style="border-left-color: #4CAF50;">
+      <h2><span class="file-icon">✅</span> After Adding Images</h2>
+      <p><strong>No code changes needed!</strong> The prototype will automatically detect and display your images.</p>
+      
+      <ol style="margin-left: 1.5rem; margin-top: 1rem;">
+        <li>Copy your images to the correct folders</li>
+        <li>Refresh your browser (F5 or Ctrl+R)</li>
+        <li>Images should appear automatically</li>
+      </ol>
+      
+      <div class="note">
+        <strong>🔧 Troubleshooting:</strong> If images don't show, check the file names match exactly (case-sensitive on some systems).
+      </div>
+    </div>
+    
+    <!-- Quick Start -->
+    <div class="demo-section">
+      <h2 style="margin-bottom: 1rem;">🚀 Ready to Test?</h2>
+      <p style="margin-bottom: 1.5rem;">You can start testing even without images!</p>
+      <a href="index.html" class="btn">Open Student Interface</a>
+      <a href="staff.html" class="btn btn-secondary">Open Staff Dashboard</a>
+    </div>
+    
+    <!-- Footer Note -->
+    <div style="margin-top: 2rem; padding-top: 2rem; border-top: 2px solid #dee2e6; text-align: center; color: #6c757d;">
+      <p><strong>Pro Tip:</strong> For evaluation, the emoji placeholders work perfectly fine. Focus on demonstrating the functionality!</p>
+      <p style="margin-top: 0.5rem; font-size: 0.875rem;">GIKI Food Ordering System - Milestone 4 - Fall 2025</p>
+    </div>
+  </div>
+</body>
+</html>
