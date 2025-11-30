@@ -670,7 +670,9 @@ function updateCartUI() {
 
       return `
       <div class="cart-item">
-        <div class="cart-item-image" aria-hidden="true">🍽</div>
+        <div class="cart-item-image">
+          <img src="${item.image}" alt="${item.name}" onerror="this.onerror=null;this.parentElement.innerHTML='🍽'">
+        </div>
         <div class="cart-item-details">
           <div class="cart-item-name">${item.name}</div>
           ${cartItem.customizations ? `<div class="cart-item-customization">${cartItem.customizations}</div>` : ""}
