@@ -14,8 +14,80 @@ const AppState = {
   isLoading: false,
 }
 
+// Lazy Loading Image Observer
+let imageObserver = null;
+
 // Data and DataHelper declarations
 // Use `DATA` and `DataHelper` from `js/data.js` (loaded before this file)
+
+// ========================================
+// Lazy Loading Image System
+// ========================================
+
+function initLazyLoading() {
+  // Create Intersection Observer for lazy loading images
+  imageObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const img = entry.target;
+        loadImage(img);
+        observer.unobserve(img);
+      }
+    });
+  }, {
+    rootMargin: '100px 0px', // Start loading 100px before image enters viewport
+    threshold: 0.01
+  });
+}
+
+function loadImage(img) {
+  const src = img.dataset.src;
+  if (!src) return;
+  
+  // Create a new image to preload
+  const tempImg = new Image();
+  
+  tempImg.onload = () => {
+    img.src = src;
+    img.classList.add('loaded');
+    // Mark parent wrapper as loaded
+    const wrapper = img.closest('.image-wrapper');
+    if (wrapper) wrapper.classList.add('loaded');
+  };
+  
+  tempImg.onerror = () => {
+    img.src = 'images/food/placeholder.svg';
+    img.classList.add('loaded');
+    const wrapper = img.closest('.image-wrapper');
+    if (wrapper) wrapper.classList.add('loaded');
+  };
+  
+  tempImg.src = src;
+}
+
+function observeImages() {
+  // Find all lazy images and observe them
+  document.querySelectorAll('img.lazy-image:not(.loaded)').forEach(img => {
+    if (imageObserver) {
+      imageObserver.observe(img);
+    }
+  });
+}
+
+// Helper function to create lazy image HTML
+function createLazyImage(src, alt, className = '') {
+  return `
+    <div class="image-wrapper">
+      <img 
+        class="lazy-image ${className}" 
+        data-src="${src}" 
+        alt="${alt}"
+        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3C/svg%3E"
+        style="width: 100%; height: 100%; object-fit: cover;"
+      >
+    </div>
+  `;
+}
 
 // ========================================
 // Toast Notification System
@@ -105,6 +177,7 @@ function initializeApp() {
   console.log("[v0] Starting app initialization")
   console.log("[v0] DATA outlets:", DATA.outlets)
   initTheme()
+  initLazyLoading() // Initialize lazy loading
   loadUserProfile()
   loadOutlets()
   setupEventListeners()
@@ -256,6 +329,7 @@ function showSearchView(results) {
   } else {
     grid.innerHTML = results.map((item) => createMenuItemCard(item)).join("")
     setupMenuItemListeners()
+    observeImages() // Observe new images for lazy loading
   }
 
   showView("search")
@@ -327,8 +401,14 @@ function loadOutlets() {
     .map(
       (outlet) => `
     <div class="outlet-card" data-outlet-id="${outlet.id}" onclick="handleOutletClick('${outlet.id}')">
-      <div class="outlet-card-image">
-        <img src="${outlet.image}" alt="${outlet.name}" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy" onerror="this.onerror=null;this.src='images/food/placeholder.svg'">
+      <div class="outlet-card-image image-wrapper">
+        <img 
+          class="lazy-image" 
+          data-src="${outlet.image}" 
+          alt="${outlet.name}"
+          src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3C/svg%3E"
+          style="width: 100%; height: 100%; object-fit: cover;"
+        >
       </div>
       <div class="outlet-card-content">
         <div class="outlet-header">
@@ -349,6 +429,9 @@ function loadOutlets() {
     .join("")
 
   console.log("[v0] Grid innerHTML after render:", grid.innerHTML.substring(0, 100))
+  
+  // Observe images for lazy loading
+  observeImages()
 }
 
 function handleOutletClick(outletId) {
@@ -411,6 +494,7 @@ function loadMenuItems(outletId, category = "all") {
 
   grid.innerHTML = items.map((item) => createMenuItemCard(item)).join("")
   setupMenuItemListeners()
+  observeImages() // Observe new images for lazy loading
 }
 
 function createMenuItemCard(item) {
@@ -419,8 +503,14 @@ function createMenuItemCard(item) {
 
   return `
     <div class="menu-item-card" data-item-id="${item.id}">
-      <div class="menu-item-image">
-        <img src="${item.image}" alt="${item.name}" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy" onerror="this.onerror=null;this.src='images/food/placeholder.svg'">
+      <div class="menu-item-image image-wrapper">
+        <img 
+          class="lazy-image" 
+          data-src="${item.image}" 
+          alt="${item.name}"
+          src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3C/svg%3E"
+          style="width: 100%; height: 100%; object-fit: cover;"
+        >
         <div class="item-badges">
           ${isLowStock ? `<span class="stock-badge low">Only ${item.stock} left!</span>` : ""}
           ${!isAvailable ? '<span class="stock-badge out">Sold Out</span>' : ""}

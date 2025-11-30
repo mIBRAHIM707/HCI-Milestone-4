@@ -991,3 +991,46 @@ a:hover {
 [data-theme="dark"] .theme-toggle:hover {
   background-color: var(--color-gray-300);
 }
+
+/* ========================================
+   Lazy Loading Images
+   ======================================== */
+
+/* Base image styles for lazy loading */
+.lazy-image {
+  opacity: 0;
+  transition: opacity 0.4s ease-in-out;
+}
+
+.lazy-image.loaded {
+  opacity: 1;
+}
+
+/* Image placeholder/skeleton while loading */
+.image-wrapper {
+  position: relative;
+  background: linear-gradient(90deg, var(--color-gray-200) 25%, var(--color-gray-100) 50%, var(--color-gray-200) 75%);
+  background-size: 200% 100%;
+  animation: image-shimmer 1.5s infinite;
+}
+
+@keyframes image-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.image-wrapper.loaded {
+  background: none;
+  animation: none;
+}
+
+/* Blur-up effect for progressive loading */
+.lazy-image.blur-up {
+  filter: blur(10px);
+  transform: scale(1.05);
+}
+
+.lazy-image.blur-up.loaded {
+  filter: blur(0);
+  transform: scale(1);
+}
